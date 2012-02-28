@@ -8,14 +8,12 @@ version = '1.0-SNAPSHOT'
 sourceCompatibility = 1.6
 sourceEncoding = 'UTF-8'
 
-serverApiVersion = '3.7.0-beta-27.jar'
-pluginApiVersion = '3.7.0-beta-27.jar'
 trueZipVersion = '7.3.1'
 
 dependencies {
 	compile "com.xebialabs.deployit:server-core:3.7.0-SNAPSHOT"
-	compile "com.xebialabs.deployit:server-plugin-api:3.7.0-beta-27"
-	compile "com.xebialabs.deployit:udm-plugin-api:3.7.0-beta-27"
+	compile "com.xebialabs.deployit:server-plugin-api:3.7.0-beta-31-SNAPSHOT"
+	compile "com.xebialabs.deployit:udm-plugin-api:3.7.0-beta-31-SNAPSHOT"
 	testCompile 'junit:junit:4.8.2'
 	testCompile 'com.qrmedia.commons:commons-lang:1.0.2'
 	testCompile 'ch.qos.logback:logback-classic:0.9.24'
