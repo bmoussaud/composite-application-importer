@@ -1,0 +1,8 @@
+application=PetCompositeApp
+version=3.4
+
+package.1.name=PetClinic-Ear
+package.1.version=1.0
+
+package.2.name=PetClinic-Ear
+package.2.version=2.0
