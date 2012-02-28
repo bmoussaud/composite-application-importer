@@ -1,12 +1,17 @@
 package com.xebialabs.deployit.service.importer;
 
+import com.google.common.collect.ImmutableList;
 import com.xebialabs.deployit.plugin.api.udm.Application;
 import com.xebialabs.deployit.plugin.api.udm.CompositePackage;
 import com.xebialabs.deployit.server.api.importer.*;
 
+import java.io.File;
+import java.io.FilenameFilter;
+import java.util.List;
+
 import static com.xebialabs.deployit.server.api.util.IdGenerator.generateId;
 
-public class CompositeApplicationImporter implements Importer {
+public class CompositeApplicationImporter implements ListableImporter {
 
 	public static String EXTENSION = ".cad";
 
@@ -46,5 +51,16 @@ public class CompositeApplicationImporter implements Importer {
 	@Override
 	public void cleanUp(PackageInfo packageInfo, ImportingContext context) {
 
+	}
+
+	@Override
+	public List<String> list(File directory) {
+		final String[] list = directory.list(new FilenameFilter() {
+			@Override
+			public boolean accept(File dir, String name) {
+				return name.endsWith(EXTENSION);
+			}
+		});
+		return ImmutableList.copyOf(list);
 	}
 }
