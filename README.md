@@ -18,8 +18,9 @@ The Composite Application Importer is a Deployit importer allowing to define and
 Create a file with .cad extension (composite application descriptor). It follows the Java property file syntax.
 The file should contains at least an application, a version.
 each package is defined using the following syntax:
-package.X.name=ApplicationName
-package.X.version=ApplicationVersion
+
+	package.X.name=ApplicationName
+	package.X.version=ApplicationVersion
 
 where X is a number, starting by 1
 
