@@ -1,82 +1,25 @@
-apply plugin: 'java'
-apply plugin: 'maven'
-apply plugin: 'idea'
+commonBuildPath = hasProperty("localCommonBuildRepo") ? file(localCommonBuildRepo).toURL().toString() : 'https://github.com/xebialabs/deployit-common-build/raw/master'
 
-group = 'com.xebialabs.deployit'
-version = '1.0-SNAPSHOT'
+apply from: "$commonBuildPath/repositories.gradle"
+apply from: "$commonBuildPath/plugin-build.gradle"
 
-sourceCompatibility = 1.6
-sourceEncoding = 'UTF-8'
+version = '3.7.0-beta-SNAPSHOT'
+apiVersion = '3.7.0-beta-1'
 
-trueZipVersion = '7.3.1'
 
 dependencies {
-	compile "com.xebialabs.deployit:server-core:3.7.0-SNAPSHOT"
-	compile "com.xebialabs.deployit:server-plugin-api:3.7.0-beta-31-SNAPSHOT"
-	compile "com.xebialabs.deployit:udm-plugin-api:3.7.0-beta-31-SNAPSHOT"
-	testCompile 'junit:junit:4.8.2'
-	testCompile 'com.qrmedia.commons:commons-lang:1.0.2'
-	testCompile 'ch.qos.logback:logback-classic:0.9.24'
-}
+	compile deps.deployit_server_plugin_api
+	compile deps.deployit_udm_plugin_api
+	compile  "com.xebialabs.deployit:server-core:${apiVersion}"
+	compile deps.guava
 
-repositories {
-	mavenLocal()
-	if (!rootProject.hasProperty('offline')) {
-		mavenRepo urls: "${nexusBaseUrl}/groups/public/"
-		mavenRepo urls: "${nexusBaseUrl}/repositories/thirdparty/"
-		mavenRepo urls: "${nexusBaseUrl}/repositories/hidden-thirdparty/"
-		mavenRepo urls: "${nexusBaseUrl}/repositories/snapshots"
-		mavenRepo urls: "${nexusBaseUrl}/repositories/releases"
-		org.apache.ivy.util.url.CredentialsStore.INSTANCE.addCredentials("Sonatype Nexus Repository Manager", nexusHost, nexusUserName, nexusPassword);
-		mavenCentral()
-		mavenRepo urls: 'https://oss.sonatype.org/service/local/repositories/nljavadude-593/content/'
-	}
-}
+	compile deps.deployit_jee_plugin
+	compile deps.deployit_generic_plugin
+	compile deps.deployit_remoting_plugin
+	compile deps.overthere
+	compile deps.commons_httpclient
 
-configurations {
-	// http://issues.gradle.org/browse/GRADLE-784
-	provided
-}
+	testCompile deps.commons_io
+	testCompile deps.commons_lang
 
-
-afterEvaluate { eachProject ->
-	eachProject.tasks.withType(Test).each { testTask ->
-		testTask.onlyIf { !project.hasProperty('skipTests') }
-		testTask.afterSuite { descriptor, result ->
-			if (descriptor.className != null) {
-				println "${descriptor.className}: ${result.testCount} tests; failed: ${result.failedTestCount}; skipped: ${result.skippedTestCount}"
-			} else if (descriptor.className == null && descriptor.parent == null) {
-				println "Total: ${result.testCount} tests; failed: ${result.failedTestCount}; skipped: ${result.skippedTestCount}"
-			}
-		}
-	}
-}
-
-task generatePom << {
-	conf2ScopeMappings.addMapping(Integer.MAX_VALUE, configurations.provided,
-			Conf2ScopeMappingContainer.PROVIDED)
-	pom {
-		project {
-			build {
-				plugins {
-					plugin {
-						artifactId 'maven-compiler-plugin'
-						version '2.3'
-						configuration {
-							encoding = sourceEncoding
-							source = "${sourceCompatibility}".toString()
-							target = "${sourceCompatibility}".toString()
-						}
-					}
-					plugin {
-						artifactId 'maven-resources-plugin'
-						version '2.3'
-						configuration {
-							encoding = sourceEncoding
-						}
-					}
-				}
-			}
-		}
-	}.writeTo('pom.xml')
 }

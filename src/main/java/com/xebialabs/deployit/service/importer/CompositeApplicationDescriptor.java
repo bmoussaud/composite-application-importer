@@ -7,7 +7,6 @@ import com.google.common.io.Closeables;
 import com.xebialabs.deployit.plugin.api.udm.DeploymentPackage;
 import com.xebialabs.deployit.plugin.api.udm.Version;
 
-import javax.annotation.Nullable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -59,7 +58,7 @@ public class CompositeApplicationDescriptor {
 		}
 
 		@Override
-		public DeploymentPackage apply(@Nullable Map<String, String> descriptor) {
+		public DeploymentPackage apply(Map<String, String> descriptor) {
 			final String namekey = format("%sname", indexedRulePrefix);
 			final String versionkey = format("%sversion", indexedRulePrefix);
 			if (descriptor.containsKey(namekey) && descriptor.containsKey(versionkey)) {
