@@ -1,6 +1,7 @@
 package com.xebialabs.deployit.service.importer;
 
 import com.google.common.collect.ImmutableList;
+import com.xebialabs.deployit.plugin.api.reflect.Type;
 import com.xebialabs.deployit.plugin.api.udm.Application;
 import com.xebialabs.deployit.plugin.api.udm.CompositePackage;
 import com.xebialabs.deployit.server.api.importer.*;
@@ -33,12 +34,12 @@ public class CompositeApplicationImporter implements ListableImporter {
 	@Override
 	public ImportedPackage importEntities(PackageInfo packageInfo, ImportingContext context) {
 
-		Application application = new Application();
+		Application application = Type.valueOf(Application.class).getDescriptor().newInstance();
 		application.setId(packageInfo.getApplicationId());
 
 
 		final CompositeApplicationDescriptor descriptor = context.getAttribute("descriptor");
-		CompositePackage version = new CompositePackage();
+		CompositePackage version = Type.valueOf(CompositePackage.class).getDescriptor().newInstance();
 		version.setId(generateId(application, packageInfo.getApplicationVersion()));
 		version.getPackages().addAll(descriptor.getVersions());
 		version.setApplication(application);

@@ -2,8 +2,11 @@ package com.xebialabs.deployit.service.importer;
 
 import com.google.common.collect.Maps;
 import com.xebialabs.deployit.plugin.api.udm.CompositePackage;
+import com.xebialabs.deployit.plugin.api.boot.PluginBooter;
+import com.xebialabs.deployit.plugin.api.udm.CompositePackage;
 import com.xebialabs.deployit.plugin.api.udm.Version;
 import com.xebialabs.deployit.server.api.importer.*;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.File;
@@ -15,6 +18,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class CompositeApplicationImporterTest {
+
+	@BeforeClass
+	public static void boot() {
+		PluginBooter.bootWithoutGlobalContext();
+	}
 
 	private Importer importer = new CompositeApplicationImporter();
 
