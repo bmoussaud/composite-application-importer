@@ -1,7 +1,6 @@
 package com.xebialabs.deployit.service.importer;
 
 import com.google.common.collect.Maps;
-import com.xebialabs.deployit.plugin.api.udm.CompositePackage;
 import com.xebialabs.deployit.plugin.api.boot.PluginBooter;
 import com.xebialabs.deployit.plugin.api.udm.CompositePackage;
 import com.xebialabs.deployit.plugin.api.udm.Version;
